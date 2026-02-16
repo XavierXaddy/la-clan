@@ -1,0 +1,374 @@
+/* Global Reset / Consistency */
+* { box-sizing: border-box; }
+
+/* Page Base */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background-color: #0e1116;
+  color: #e6edf3;
+  min-height: 100vh;
+}
+
+/* ===================== */
+/* Hero Header */
+/* ===================== */
+.site-header {
+  min-height: 5vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  font-size: 3.5rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  margin: 0;
+
+  animation: float 12s ease-in-out infinite;
+}
+
+.logo .word { white-space: nowrap; }
+
+/* Symbol */
+.logo-symbol {
+  width: 90px;
+  height: auto;
+  filter: drop-shadow(0 0 18px rgba(77, 163, 255, 0.7));
+  animation: pulse 6s ease-in-out infinite;
+}
+
+/* Tagline */
+.tagline {
+  margin-top: 20px;
+  color: #9da7b1;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+}
+
+/* Divider */
+.divider {
+  width: 1175px;
+  height: 1px;
+  margin: 24px auto 0;
+  background: linear-gradient(to right, transparent, rgba(120,170,255,0.4), transparent);
+}
+
+/* ===================== */
+/* Navigation */
+/* ===================== */
+.nav-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+
+  padding: 18px 0;
+
+  backdrop-filter: blur(6px);
+  background: rgba(14, 17, 22, 0.75);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+@supports not (backdrop-filter: blur(6px)) {
+  .nav-wrapper { background: rgba(14, 17, 22, 0.9); }
+}
+
+.main-nav {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+}
+
+.main-nav a {
+  color: #9da7b1;
+  text-decoration: none;
+  font-size: 0.95rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  position: relative;
+  transition: color 0.25s ease;
+}
+
+.main-nav a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  width: 0;
+  height: 1px;
+  background: rgba(120,170,255,0.6);
+  transition: width 0.25s ease, left 0.25s ease;
+}
+
+.main-nav a:hover { color: #e6edf3; }
+.main-nav a:hover::after { width: 100%; left: 0; }
+
+/* ===================== */
+/* Page Content */
+/* ===================== */
+.page-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 20px 120px;
+}
+
+.panel {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 22px;
+  margin: 18px 0;
+}
+
+.panel h2 {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+  letter-spacing: 0.08em;
+}
+
+.panel p {
+  margin: 0;
+  color: #9da7b1;
+  line-height: 1.6;
+}
+
+/* ===================== */
+/* Animations */
+/* ===================== */
+@keyframes pulse {
+  0%, 100% { filter: drop-shadow(0 0 14px rgba(120, 170, 255, 0.45)); }
+  50%      { filter: drop-shadow(0 0 22px rgba(120, 170, 255, 0.65)); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+/* ===================== */
+/* Responsive Tweaks */
+/* ===================== */
+@media (max-width: 600px) {
+  .logo {
+    font-size: 2.2rem;
+    gap: 12px;
+    letter-spacing: 0.12em;
+  }
+
+  .logo-symbol { width: 60px; }
+
+  .main-nav { gap: 18px; }
+  .main-nav a { font-size: 0.75rem; }
+}
+
+/* ===================== */
+/* Roster / Council Styling */
+/* ===================== */
+
+.panel-subtext {
+  margin: 8px 0 0;
+  color: #9da7b1;
+  line-height: 1.6;
+}
+
+/* Council */
+.council-panel {
+  border: 1px solid rgba(120,170,255,0.25);
+  background: linear-gradient(145deg, rgba(120,170,255,0.08), rgba(255,255,255,0.02));
+}
+
+.council-grid {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.council-member {
+  padding: 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+
+.council-member:hover {
+  transform: translateY(-2px);
+  border-color: rgba(120,170,255,0.35);
+}
+
+.council-name {
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+}
+
+.council-meta {
+  margin-top: 6px;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9da7b1;
+}
+
+.council-gold {
+  color: #ffcc66;
+  text-shadow: 0 0 12px rgba(255, 204, 102, 0.25);
+}
+
+/* Grid wrap */
+.roster-grid-wrap {
+  margin-top: 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
+  overflow: hidden; /* clean edges */
+}
+
+/* Grid table */
+.roster-grid {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed; /* fit width */
+}
+
+.roster-grid th,
+.roster-grid td {
+  padding: 10px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-right: 1px solid rgba(255,255,255,0.04);
+  vertical-align: top;
+}
+
+.roster-grid tr:last-child td,
+.roster-grid tr:last-child th { border-bottom: none; }
+
+.roster-grid th {
+  background: rgba(255,255,255,0.02);
+  color: #9da7b1;
+  font-size: 0.70rem;         /* slightly smaller headers */
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.corner { width: 150px; }
+
+/* Sticky header row */
+.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  backdrop-filter: blur(6px);
+  background: rgba(14, 17, 22, 0.82);
+}
+
+/* Sticky left rank column */
+.sticky-left {
+  position: sticky;
+  left: 0;
+  z-index: 6;
+  backdrop-filter: blur(6px);
+  background: rgba(14, 17, 22, 0.86);
+}
+
+/* Top-left corner above everything */
+.corner.sticky-left.sticky-top { z-index: 7; }
+
+/* Prestige header colored text */
+.prestige-label {
+  color: var(--prestigeColor);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+}
+
+/* Rank label */
+.rank-cell {
+  width: 150px;
+  white-space: nowrap;
+}
+
+/* Cells */
+.cell { min-height: 56px; }
+.cell.empty { opacity: 0.25; }
+
+/* Member names: one line, smaller, auto-fit by JS if needed */
+.member {
+  margin: 4px 0;            /* tighter vertical spacing */
+  padding: 2px 0;
+  background: transparent;
+  border: none;
+
+  display: block;
+  white-space: nowrap;       /* keep one line */
+  overflow: hidden;          /* prevents spill into other cells */
+}
+
+.prestige-text {
+  color: var(--prestigeColor);
+  font-weight: 600;
+  font-size: 0.90rem;        /* base size; JS can reduce if needed */
+  letter-spacing: 0.04em;
+}
+.roster-grid td {
+  text-align: center;
+}
+.rank-cell {
+  text-align: left;
+}
+.roster-grid td {
+  text-align: center;
+  vertical-align: middle;
+}
+.member {
+  text-align: center;
+}
+/* ===================== */
+/* Candidate Panel */
+/* ===================== */
+
+.candidate-panel {
+  border: 1px solid rgba(255, 200, 120, 0.25);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 200, 120, 0.08),
+    rgba(255,255,255,0.02)
+  );
+}
+
+.candidate-list {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+}
+
+.candidate-entry {
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  color: #ffcc66;
+
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.candidate-entry:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 200, 120, 0.35);
+}

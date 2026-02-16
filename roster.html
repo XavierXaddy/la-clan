@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lost Academy — Roster</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <h1 class="logo">
+      <span class="word">The Lost</span>
+      <img src="symbol.png" alt="Lost Academy Symbol" class="logo-symbol">
+      <span class="word">Academy</span>
+    </h1>
+
+    <p class="tagline">Roster — Members, Ranks, and Prestige</p>
+    <div class="divider"></div>
+  </header>
+
+  <!-- Sticky Nav -->
+  <div class="nav-wrapper">
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="archive.html">Archive</a>
+      <a href="roster.html">Roster</a>
+      <a href="forum.html">Forum</a>
+      <a href="status.html">Status</a>
+    </nav>
+  </div>
+
+  <main class="page-content">
+
+    <!-- Council -->
+    <section class="panel council-panel">
+      <h2>Council</h2>
+      <p class="panel-subtext">The ruling council of the Lost Academy.</p>
+
+      <div id="councilGrid" class="council-grid"></div>
+    </section>
+
+    <!-- Rank x Prestige Grid -->
+    <section class="panel">
+      <h2>Roster Grid</h2>
+      <p class="panel-subtext">Ranks from bottom to top, Prestige across the top.</p>
+
+      <div class="roster-grid-wrap">
+        <table class="roster-grid" id="rosterGrid"></table>
+      </div>
+    </section>
+	
+	<!-- Candidates -->
+	<section class="panel candidate-panel">
+	  <h2>Candidates</h2>
+	  <p class="panel-subtext">
+		Trial members undergoing evaluation before full induction.
+	  </p>
+
+	  <div id="candidateList" class="candidate-list"></div>
+	</section>
+
+  </main>
+
+  <script>
+    // =========================
+    // EDIT THESE LISTS IF NEEDED
+    // =========================
+
+    // Rank order (top -> bottom)
+    const RANKS = [
+      "Master",
+      "Knight",
+      "Scholar",
+      "Disciple",
+      "Apprentice",
+      "Initiate"
+    ];
+
+    // Prestige order (left -> right)
+    const PRESTIGES = [
+      { key: "none",     label: "No Prestige", color: "#e6edf3" },
+      { key: "honored",  label: "Honored",     color: "#ff3b3b" },
+      { key: "revered",  label: "Revered",     color: "#ff9a2e" },
+      { key: "exalted",  label: "Exalted",     color: "#40ff40" },
+      { key: "paragon",  label: "Paragon",     color: "#3b57ff" },
+      { key: "galactic", label: "Galactic",    color: "#ff3bff" },
+      { key: "astral",   label: "Astral",      color: "#34e8ff" }
+    ];
+
+    // =========================
+    // MEMBERS DATA
+    // rank: "Council" shows in Council panel only
+    // prestige must match a PRESTIGES key
+    // =========================
+    const MEMBERS = [
+      // Council (example — replace with yours)
+      { name: "Xavier",  rank: "Council", prestige: "Council Leader" },
+      { name: "Makha",   rank: "Council", prestige: "Council Leader" },
+      { name: "Gallows", rank: "Council", prestige: "Council" },
+      { name: "Tanulis", rank: "Council", prestige: "Council" },
+
+      // Examples (replace with your real roster)
+      { name: "BigChimpin", rank: "Master", prestige: "exalted" },
+      { name: "Yalanue", rank: "Knight", prestige: "none" },
+	  { name: "Noble", rank: "Knight", prestige: "exalted" },
+	  { name: "Palimuna", rank: "Scholar", prestige: "none" },
+	  { name: "DemonKing", rank: "Apprentice", prestige: "none" },
+	  { name: "Bongrip", rank: "Disciple", prestige: "none" },
+      { name: "Shyrack",    rank: "Master", prestige: "revered" },
+      { name: "Mystra",     rank: "Knight", prestige: "none" },
+      { name: "Veradust",   rank: "Scholar", prestige: "paragon" },
+      { name: "Thesseron",  rank: "Initiate", prestige: "paragon" },
+      { name: "Leotrix",    rank: "Initiate", prestige: "none" },
+      { name: "Silence",    rank: "Initiate", prestige: "none" },
+	  { name: "Bluff", rank: "Master", prestige: "No" },
+	  { name: "Venset", rank: "Knight", prestige: "honored" },
+	  { name: "Jiggalator", rank: "Knight", prestige: "none" },
+	  { name: "Shoukan", rank: "Disciple", prestige: "none" },
+	  { name: "WolfSolar", rank: "Initiate", prestige: "none" },
+	  { name: "Huff", rank: "Initiate", prestige: "none" },
+	  { name: "Fortress", rank: "Knight", prestige: "revered" },
+	  { name: "JohnLemon", rank: " Disciple", prestige: "none" },
+	  { name: "Uhtred", rank: "Initiate", prestige: "none" },
+	  { name: "Infirmus", rank: "Initiate", prestige: "none" },
+	  { name: "Xaxas", rank: "Candidate", prestige: "none" },
+	  { name: "QueenEmilia", rank: "Candidate", prestige: "none" },
+    ];
+
+    // =========================
+    // Helpers
+    // =========================
+    const prestigeByKey = Object.fromEntries(PRESTIGES.map(p => [p.key, p]));
+
+    function safeText(s) { return (s ?? "").toString(); }
+    function normalize(s) { return safeText(s).trim().toLowerCase(); }
+    function sortNames(a, b) { return normalize(a.name).localeCompare(normalize(b.name)); }
+    function prestigeLabel(key) { return prestigeByKey[key]?.label ?? key; }
+
+    // =========================
+    // Council
+    // =========================
+    function renderCouncil() {
+      const councilGrid = document.getElementById("councilGrid");
+      const council = MEMBERS
+        .filter(m => normalize(m.rank) === "council")
+        .sort(sortNames);
+
+      if (council.length === 0) {
+        councilGrid.innerHTML = `<div class="empty-note">No council members listed yet.</div>`;
+        return;
+      }
+
+      councilGrid.innerHTML = council.map(m => {
+        return `
+          <div class="council-member">
+            <div class="council-name council-gold">${safeText(m.name)}</div>
+            <div class="council-meta">${prestigeLabel(m.prestige)}</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // =========================
+    // Rank x Prestige Grid
+    // =========================
+    function renderRosterGrid() {
+      const table = document.getElementById("rosterGrid");
+
+      // Build rank -> prestige -> members
+      const grid = {};
+      for (const r of RANKS) {
+        grid[r] = {};
+        for (const p of PRESTIGES) grid[r][p.key] = [];
+      }
+
+      MEMBERS.forEach(m => {
+        const rank = safeText(m.rank);
+        const prestige = safeText(m.prestige || "none");
+
+        // Council displayed above
+        if (normalize(rank) === "council") return;
+
+        if (!grid[rank]) return;                 // ignore unknown ranks
+        if (!prestigeByKey[prestige]) return;    // ignore unknown prestiges
+
+        grid[rank][prestige].push(m);
+      });
+
+      // Sort names within each cell
+      for (const r of RANKS) {
+        for (const p of PRESTIGES) {
+          grid[r][p.key].sort(sortNames);
+        }
+      }
+
+      // Header row (colored text, no dot)
+      const headerCells = PRESTIGES.map(p => {
+        return `
+          <th class="sticky-top prestige-head" style="--prestigeColor:${p.color}">
+            <span class="prestige-label">${p.label}</span>
+          </th>
+        `;
+      }).join("");
+
+      const thead = `
+        <thead>
+          <tr>
+            <th class="sticky-top sticky-left corner">Rank</th>
+            ${headerCells}
+          </tr>
+        </thead>
+      `;
+
+      // Body rows
+      const rows = RANKS.map(rank => {
+        const cells = PRESTIGES.map(p => {
+          const members = grid[rank][p.key];
+
+          if (!members || members.length === 0) {
+            return `<td class="cell empty"></td>`;
+          }
+
+          const namesHtml = members.map(m =>
+            `<div class="member prestige-text" style="--prestigeColor:${p.color}">${safeText(m.name)}</div>`
+          ).join("");
+
+          return `<td class="cell">${namesHtml}</td>`;
+        }).join("");
+
+        return `
+          <tr>
+            <th class="sticky-left rank-cell">${rank}</th>
+            ${cells}
+          </tr>
+        `;
+      }).join("");
+
+      table.innerHTML = thead + `<tbody>${rows}</tbody>`;
+    }
+
+    // Run
+    renderCouncil();
+    renderRosterGrid();
+	function renderCandidates() {
+  const container = document.getElementById("candidateList");
+
+  const candidates = MEMBERS
+    .filter(m => normalize(m.rank) === "candidate")
+    .sort(sortNames);
+
+  if (candidates.length === 0) {
+    container.innerHTML = `<div class="empty-note">No candidates currently.</div>`;
+    return;
+  }
+
+  container.innerHTML = candidates.map(m => `
+    <div class="candidate-entry">
+      ${safeText(m.name)}
+    </div>
+  `).join("");
+}
+renderCouncil();
+renderRosterGrid();
+renderCandidates();
+
+  </script>
+
+</body>
+</html>
