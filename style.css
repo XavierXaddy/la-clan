@@ -372,3 +372,12 @@ body {
   transform: translateY(-1px);
   border-color: rgba(255, 200, 120, 0.35);
 }
+
+.nav-wrapper, .main-nav {
+  position: relative;
+  z-index: 9999;
+}
+.main-nav a {
+  position: relative;
+  z-index: 10000;
+}
