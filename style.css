@@ -271,30 +271,37 @@ body {
 .corner { width: 150px; }
 .rank-cell { width: 150px; white-space: nowrap; }
 
-/* === Sticky behavior (ONE system, no conflicts) === */
-/* This is the ONLY place sticky top is defined */
-:root { --navOffset: 58px; }
+/* ===== Sticky roster header FIX (single system) ===== */
+:root { --rosterHeadH: 54px; } /* match your row height */
 
-/* Top sticky prestige headers */
-.roster-grid th.sticky-top {
-  position: sticky;
-  top: var(--navOffset);
-  z-index: 20;
-  background: rgba(14, 17, 22, 0.95);
-  backdrop-filter: none;
+.roster-grid-wrap{
+  /* keep your existing settings, add this line: */
+  padding-top: var(--rosterHeadH);
 }
 
-/* Left sticky rank column */
-.roster-grid th.sticky-left {
+.roster-grid{
+  /* keep your existing settings, add this line: */
+  margin-top: calc(var(--rosterHeadH) * -1);
+}
+
+/* Sticky header sticks to TOP OF THE SCROLL CONTAINER */
+.roster-grid th.sticky-top{
+  position: sticky;
+  top: 0;                 /* IMPORTANT */
+  z-index: 20;
+  background: rgba(14, 17, 22, 0.95);
+}
+
+/* Sticky left column */
+.roster-grid th.sticky-left{
   position: sticky;
   left: 0;
   z-index: 30;
   background: rgba(14, 17, 22, 0.95);
-  backdrop-filter: none;
 }
 
-/* Top-left corner cell */
-.roster-grid th.corner.sticky-left.sticky-top {
+/* Top-left corner above both */
+.roster-grid th.corner.sticky-left.sticky-top{
   z-index: 40;
   background: rgba(14, 17, 22, 0.98);
 }
@@ -407,3 +414,4 @@ body {
   border: 1px solid rgba(255,255,255,0.18);
   backdrop-filter: blur(6px);
 }
+
