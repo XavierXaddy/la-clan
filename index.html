@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lost Academy</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -28,26 +29,156 @@
 	</nav>
   </div>
 
-  <main class="page-content">
-    <section class="panel">
-      <h2>Welcome</h2>
-      <p>Please be patient as we get the site and forums up and running!</p>
+  <main class="page">
+
+    <!-- HERO -->
+    <section class="hero">
+      <!-- Option A: Use an <img> so it’s simple and consistent -->
+      <img class="hero-img" src="images/hero-home.png" alt="Lost Academy banner" />
+
+      <!-- Optional overlay content (keep minimal) -->
+      <div class="hero-overlay">
+        <h1 class="hero-title">Lost Academy</h1>
+        <p class="hero-subtitle">Jedi Academy / JKO Community</p>
+
+        <div class="hero-actions">
+          <a class="btn primary" href="https://forums.la-clan.com/">Enter the Forums</a>
+          <a class="btn" href="status.html">Server Status</a>
+          <a class="btn" href="roster.html">Roster</a>
+        </div>
+      </div>
     </section>
 
+    <!-- NEWS / ANNOUNCEMENTS -->
     <section class="panel">
-      <h2>Updates</h2>
-      <p>Announcements, server status, changelogs, and news will live here.</p>
+      <div class="panel-head">
+        <h2>News & Announcements</h2>
+        <a class="panel-link" href="https://forums.la-clan.com/c/announcements">View all →</a>
+      </div>
+
+      <div class="news-grid">
+        <!-- Keep these as simple cards you edit occasionally -->
+        <article class="news-card pinned">
+          <div class="news-meta">
+            <span class="tag">Pinned</span>
+            <time datetime="2026-02-22">Feb 22, 2026</time>
+          </div>
+          <h3>Welcome to the new Lost Academy hub</h3>
+          <p>
+            Forums are live, roster is up, and server status is available from the nav.
+            Expect regular events and updates here.
+          </p>
+          <a class="news-more" href="https://forums.la-clan.com/">Read more →</a>
+        </article>
+
+        <article class="news-card">
+          <div class="news-meta">
+            <span class="tag">Update</span>
+            <time datetime="2026-02-20">Feb 20, 2026</time>
+          </div>
+          <h3>Weekly training night</h3>
+          <p>
+            Join us this week for duels + movement practice. Times posted on the forums.
+          </p>
+          <a class="news-more" href="https://forums.la-clan.com/">Details →</a>
+        </article>
+
+        <article class="news-card">
+          <div class="news-meta">
+            <span class="tag">Event</span>
+            <time datetime="2026-02-18">Feb 18, 2026</time>
+          </div>
+          <h3>Seasonal event results posted</h3>
+          <p>
+            Winners and highlights have been archived. Congrats to everyone who competed.
+          </p>
+          <a class="news-more" href="archive.html">See archive →</a>
+        </article>
+      </div>
     </section>
 
+    <!-- ABOUT / STATS -->
     <section class="panel">
-      <h2>Community</h2>
-      <p>Community Info</p>
+      <div class="panel-head">
+        <h2>About Lost Academy</h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            Lost Academy is a long-running Jedi Academy / Jedi Outcast community focused on
+            skill, respect, events, and a structured rank path. We host servers, trainings,
+            and seasonal competitions — with a home built to last beyond any single platform.
+          </p>
+
+          <div class="about-actions">
+            <a class="btn" href="roster.html">View the roster</a>
+            <a class="btn" href="archive.html">View the archive</a>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-label">Founded</div>
+            <div class="stat-value">200X</div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-label">Active Members</div>
+            <!-- You can manually update this number whenever you want -->
+            <div class="stat-value">XX</div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-label">Primary Hub</div>
+            <div class="stat-value">
+              <a class="inline-link" href="https://forums.la-clan.com/">Forums</a>
+            </div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-label">Servers</div>
+            <div class="stat-value">
+              <a class="inline-link" href="status.html">Live status</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <div style="height: 120vh;"></div>
+    <!-- AUTO-SCROLL GALLERY (5 at a time on desktop) -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Gallery</h2>
+
+        <div class="gallery-controls">
+          <button class="icon-btn" type="button" data-gallery-prev aria-label="Previous images">‹</button>
+          <button class="icon-btn" type="button" data-gallery-next aria-label="Next images">›</button>
+        </div>
+      </div>
+
+      <div class="gallery-wrap">
+        <div class="gallery" id="homeGallery" aria-label="Lost Academy gallery">
+          <!-- Add/remove images whenever. Keep filenames simple. -->
+          <a class="g-item" href="images/home/01.jpg"><img src="images/home/01.jpg" alt="Lost Academy screenshot 1"></a>
+          <a class="g-item" href="images/home/02.jpg"><img src="images/home/02.jpg" alt="Lost Academy screenshot 2"></a>
+          <a class="g-item" href="images/home/03.jpg"><img src="images/home/03.jpg" alt="Lost Academy screenshot 3"></a>
+          <a class="g-item" href="images/home/04.jpg"><img src="images/home/04.jpg" alt="Lost Academy screenshot 4"></a>
+          <a class="g-item" href="images/home/05.jpg"><img src="images/home/05.jpg" alt="Lost Academy screenshot 5"></a>
+          <a class="g-item" href="images/home/06.jpg"><img src="images/home/06.jpg" alt="Lost Academy screenshot 6"></a>
+          <a class="g-item" href="images/home/07.jpg"><img src="images/home/07.jpg" alt="Lost Academy screenshot 7"></a>
+          <a class="g-item" href="images/home/08.jpg"><img src="images/home/08.jpg" alt="Lost Academy screenshot 8"></a>
+        </div>
+      </div>
+
+      <p class="muted-note">Tip: hover to pause auto-scroll. You can also scroll/drag manually.</p>
+    </section>
+
   </main>
 
+  <script src="home.js" defer></script>
 </body>
 </html>
+
 
 
