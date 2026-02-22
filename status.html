@@ -1,45 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Lost Academy — Server Status</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-  <header class="site-header">
-    <h1 class="logo">
-      <span class="word">The Lost</span>
-      <img src="symbol.png" alt="Lost Academy Symbol" class="logo-symbol">
-      <span class="word">Academy</span>
-    </h1>
-
-    <p class="tagline">Server Status</p>
-
-    <div class="divider"></div>
-  </header>
-
-  <div class="nav-wrapper">
-    <nav class="main-nav">
-      <a href="index.html">Home</a>
-      <a href="archive.html">Archive</a>
-      <a href="roster.html">Roster</a>
-      <a href="https://forums.la-clan.com/">Forum</a>
-      <a href="status.html">Status</a>
-    </nav>
-  </div>
-
-  <main class="page-content">
-
-    <!DOCTYPE html>
-<html lang="en">
-<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lost Academy — Status</title>
+  <title>Lost Academy — Server Status</title>
   <link rel="stylesheet" href="style.css">
 
-  <!-- Status-specific styling (safe to move into style.css later) -->
   <style>
     .servers-grid{
       display: grid;
@@ -101,6 +67,7 @@
       border: 1px solid rgba(255,255,255,0.10);
       background: rgba(255,255,255,0.03);
     }
+
     .dot{
       width: 8px;
       height: 8px;
@@ -108,6 +75,7 @@
       background: currentColor;
       box-shadow: 0 0 10px currentColor;
     }
+
     .pill.on{ color: #40ff40; }
     .pill.off{ color: #ff3b3b; }
 
@@ -146,7 +114,6 @@
 
 <body>
 
-  <!-- Header -->
   <header class="site-header">
     <h1 class="logo">
       <span class="word">The Lost</span>
@@ -154,11 +121,10 @@
       <span class="word">Academy</span>
     </h1>
 
-    <p class="tagline">Status — Live Server Info</p>
+    <p class="tagline">Server Status</p>
     <div class="divider"></div>
   </header>
 
-  <!-- Sticky Nav -->
   <div class="nav-wrapper">
     <nav class="main-nav">
       <a href="index.html">Home</a>
@@ -184,12 +150,15 @@
   <script>
     const THUMB_BASE = "/map_thumbnails/";
     const THUMB_FALLBACK = "splash.jpg";
+
+    // This must exist on your site:
+    // https://la-clan.com/status/status.json
     const STATUS_JSON = "/status/status.json";
 
     function cleanMapName(map) {
       map = (map || "").trim();
-      map = map.replace(/^mp\//i, "");     // remove mp/
-      map = map.replace(/\.bsp$/i, "");    // remove .bsp if present
+      map = map.replace(/^mp\//i, "");
+      map = map.replace(/\.bsp$/i, "");
       return map;
     }
 
@@ -264,7 +233,6 @@
         const data = await res.json();
 
         container.innerHTML = (data.servers || []).map(renderServerCard).join("");
-
         note.textContent = "Updated: " + new Date(data.updatedAt).toLocaleString();
       } catch (e) {
         container.innerHTML = `<div class="panel-subtext">Could not load status.</div>`;
@@ -278,9 +246,3 @@
 
 </body>
 </html>
-    
-  </main>
-
-</body>
-</html>
-
