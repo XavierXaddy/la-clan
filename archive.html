@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lost Academy — Archive</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -15,7 +16,6 @@
     </h1>
 
     <p class="tagline">Archives - The History of Notable events in Lost Academy</p>
-
     <div class="divider"></div>
   </header>
 
@@ -29,77 +29,79 @@
     </nav>
   </div>
 
-<section class="panel">
-  <div class="panel-head">
-    <h2>Archive</h2>
-    <a class="panel-link" href="https://forums.la-clan.com/c/announcements">Announcements →</a>
-  </div>
+  <!-- IMPORTANT: keep Archive content inside the centered page container -->
+  <main class="page-content">
 
-  <p class="panel-subtext">
-    A running timeline from the founding of Lost Academy to today. Some dates are approximate.
-  </p>
-
-  <div class="archive-list">
-
-    <!-- ENTRY -->
-    <article class="archive-entry">
-      <div class="archive-top">
-        <span class="archive-tag tag major">Website/Forums</span>
-        <time class="archive-date" datetime="2026-02-22">Feb 22, 2026</time>
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Archive</h2>
+        <a class="panel-link" href="https://forums.la-clan.com/c/announcements">Announcements →</a>
       </div>
 
-      <h3 class="archive-title">New hub site goes live</h3>
-      <p class="archive-desc">
-        Website + roster + live server status launch. Forums become the primary hub. 
-        We decided to go old school as Discords policies changed and they started to require ID/Facial Verification. Any upcoming events, Recruits, Promotions, ETC will be posted in the Archivces Page.
+      <p class="panel-subtext">
+        A running timeline from the founding of Lost Academy to today. Some dates are approximate.
       </p>
 
-      <div class="archive-links">
-        <a class="inline-link" href="index.html">Home</a>
-        <a class="inline-link" href="status.html">Server status</a>
-      </div>
+      <div class="archive-list">
 
-      <div class="archive-photos">
-        <a class="a-photo" href="images/archive/site-01.jpg">
-          <img src="images/archive/site-01.jpg" alt="Website screenshot">
-        </a>
-      </div>
-    </article>
+        <!-- ENTRY -->
+        <article class="archive-entry">
+          <div class="archive-top">
+            <!-- Use archive-tag + a type class (major/event/promotion/newmember/ally/other) -->
+            <span class="archive-tag major">Website/Forums</span>
+            <time class="archive-date" datetime="2026-02-22">Feb 22, 2026</time>
+          </div>
 
-    <!-- ENTRY -->
-    <article class="archive-entry">
-      <div class="archive-top">
-        <span class="archive-tag tag major">Founding</span>
-        <time class="archive-date" datetime="2024-01-15">Jan 15, 2024</time>
-      </div>
+          <h3 class="archive-title">New hub site goes live</h3>
+          <p class="archive-desc">
+            Website + roster + live server status launch. Forums become the primary hub.
+            We decided to go old school as Discords policies changed and they started to require ID/Facial Verification.
+            Any upcoming events, Recruits, Promotions, ETC will be posted in the Archives Page.
+          </p>
 
-      <h3 class="archive-title">Lost Academy is founded</h3>
-      <p class="archive-desc">
-        Lost Academy officially begins. Early roster forms and the rank/training structure is established.
-      </p>
+          <div class="archive-links">
+            <a class="inline-link" href="index.html">Home</a>
+            <a class="inline-link" href="status.html">Server status</a>
+          </div>
 
-      <div class="archive-links">
-        <a class="inline-link" href="roster.html">Roster</a>
-        <a class="inline-link" href="https://forums.la-clan.com/">Forums</a>
-      </div>
+          <div class="archive-photos">
+            <a class="a-photo" href="images/archive/site-01.jpg">
+              <img src="images/archive/site-01.jpg" alt="Website screenshot">
+            </a>
+          </div>
+        </article>
 
-      <div class="archive-photos">
-        <a class="a-photo" href="images/archive/founding-01.jpg">
-          <img src="images/archive/founding-01.jpg" alt="Founding screenshot 1">
-        </a>
-        <a class="a-photo" href="images/archive/founding-02.jpg">
-          <img src="images/archive/founding-02.jpg" alt="Founding screenshot 2">
-        </a>
+        <!-- ENTRY -->
+        <article class="archive-entry">
+          <div class="archive-top">
+            <span class="archive-tag major">Founding</span>
+            <time class="archive-date" datetime="2024-01-15">Jan 15, 2024</time>
+          </div>
+
+          <h3 class="archive-title">Lost Academy is founded</h3>
+          <p class="archive-desc">
+            Lost Academy officially begins. Early roster forms and the rank/training structure is established.
+          </p>
+
+          <div class="archive-links">
+            <a class="inline-link" href="roster.html">Roster</a>
+            <a class="inline-link" href="https://forums.la-clan.com/">Forums</a>
+          </div>
+
+          <div class="archive-photos">
+            <a class="a-photo" href="images/archive/founding-01.jpg">
+              <img src="images/archive/founding-01.jpg" alt="Founding screenshot 1">
+            </a>
+            <a class="a-photo" href="images/archive/founding-02.jpg">
+              <img src="images/archive/founding-02.jpg" alt="Founding screenshot 2">
+            </a>
+          </div>
+        </article>
+
       </div>
-    </article>
-    
-  </div>
-</section>
+    </section>
+
+  </main>
 
 </body>
 </html>
-
-
-
-
-
