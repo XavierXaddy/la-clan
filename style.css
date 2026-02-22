@@ -228,24 +228,22 @@ body {
 }
 
 /* Grid wrap */
-.roster-grid-wrap{
-  --stickyHeadH: 54px;          /* height of the sticky header row */
-  padding-top: var(--stickyHeadH);
-  position: relative;
+.roster-grid-wrap {
+  margin-top: 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
   overflow: auto;
+  position: relative;
 }
 
-/* keep sticky header stuck to the top of the scroll area */
-.roster-grid th.sticky-top{
-  top: 0 !important;            /* IMPORTANT: stick inside the wrapper */
-}
 /* Grid table */
 .roster-grid {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed;
-  position: relative;        /* predictable layering */
+  position: relative;
 }
 
 .roster-grid th,
@@ -273,17 +271,17 @@ body {
 .corner { width: 150px; }
 .rank-cell { width: 150px; white-space: nowrap; }
 
-/* === Sticky behavior (FIXED + consistent) === */
-/* Adjust this if your sticky nav height changes */
+/* === Sticky behavior (ONE system, no conflicts) === */
+/* This is the ONLY place sticky top is defined */
 :root { --navOffset: 58px; }
 
-/* Top sticky header row */
+/* Top sticky prestige headers */
 .roster-grid th.sticky-top {
   position: sticky;
   top: var(--navOffset);
   z-index: 20;
   background: rgba(14, 17, 22, 0.95);
-  backdrop-filter: none; /* prevents smear/overlap artifacts */
+  backdrop-filter: none;
 }
 
 /* Left sticky rank column */
@@ -409,4 +407,3 @@ body {
   border: 1px solid rgba(255,255,255,0.18);
   backdrop-filter: blur(6px);
 }
-
