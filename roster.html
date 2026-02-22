@@ -1,9 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lost Academy — Roster</title>
+
   <link rel="stylesheet" href="style.css">
+
+  <!--
+    Sticky header fix + layering fixes.
+    This prevents the first row (Master) from being covered by the sticky THEAD.
+    If you prefer, you can move these rules into style.css instead.
+  -->
+  <style>
+    /* Adjust this if your header row is taller/shorter */
+    :root { --rosterHeadH: 44px; }
+
+    /* Ensure the scroll container has room above for the sticky header */
+    .roster-grid-wrap{
+      overflow: auto;          /* you likely already have this */
+      position: relative;
+      padding-top: var(--rosterHeadH);
+    }
+
+    /* Pull the table back up so it stays visually aligned */
+    .roster-grid{
+      margin-top: calc(var(--rosterHeadH) * -1);
+      border-collapse: separate; /* helps sticky layering in some browsers */
+      border-spacing: 0;
+    }
+
+    /* Sticky header */
+    .roster-grid thead th.sticky-top{
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    /* Sticky left column */
+    .roster-grid th.sticky-left{
+      position: sticky;
+      left: 0;
+      z-index: 4;
+    }
+
+    /* Top-left corner cell should be above both sticky header + sticky left */
+    .roster-grid th.corner{
+      z-index: 6;
+    }
+  </style>
 </head>
 
 <body>
@@ -50,27 +95,27 @@
         <table class="roster-grid" id="rosterGrid"></table>
       </div>
     </section>
-	
-	<!-- Candidates -->
-	<section class="panel candidate-panel">
-	  <h2>Candidates</h2>
-	  <p class="panel-subtext">
-		Trial members undergoing evaluation before full induction.
-	  </p>
 
-	  <div id="candidateList" class="candidate-list"></div>
-	</section>
+    <!-- Candidates -->
+    <section class="panel candidate-panel">
+      <h2>Candidates</h2>
+      <p class="panel-subtext">
+        Trial members undergoing evaluation before full induction.
+      </p>
 
-	  <!-- Inactive Members -->
-<section class="panel inactive-panel">
-  <h2>Inactive Members</h2>
-  <p class="panel-subtext">
-    Members currently inactive, on leave, or retired.
-  </p>
+      <div id="candidateList" class="candidate-list"></div>
+    </section>
 
-  <div id="inactiveList" class="inactive-list"></div>
-</section>
-	  
+    <!-- Inactive Members -->
+    <section class="panel inactive-panel">
+      <h2>Inactive Members</h2>
+      <p class="panel-subtext">
+        Members currently inactive, on leave, or retired.
+      </p>
+
+      <div id="inactiveList" class="inactive-list"></div>
+    </section>
+
   </main>
 
   <script>
@@ -102,16 +147,16 @@
     // =========================
     // MEMBERS DATA
     // rank: "Council" shows in Council panel only
-    // prestige must match a PRESTIGES key
+    // prestige must match a PRESTIGES key (none/honored/revered/etc)
     // =========================
     const MEMBERS = [
-      // Council (example — replace with yours)
+      // Council
       { name: "Xavier",  rank: "Council", prestige: "Council Leader" },
       { name: "Gallows", rank: "Council", prestige: "Council" },
       { name: "Tanulis", rank: "Council", prestige: "Council" },
 
-      // Examples (replace with your real roster)
-      { name: "BigChimpin", rank: "Master", prestige: "exalted", inactive: true },
+      // Roster      
+	  { name: "BigChimpin", rank: "Master", prestige: "exalted", inactive: true },
       { name: "Yalanue", rank: "Knight", prestige: "none", inactive: true },
 	  { name: "Noble", rank: "Knight", prestige: "exalted" },
 	  { name: "Palimuna", rank: "Scholar", prestige: "none" },
@@ -123,7 +168,7 @@
       { name: "Thesseron",  rank: "Initiate", prestige: "paragon" },
       { name: "Leotrix",    rank: "Initiate", prestige: "none" },
       { name: "Silence",    rank: "Initiate", prestige: "none" },
-	  { name: "Bluff", rank: "Master", prestige: "No" },
+	  { name: "Bluff", rank: "Master", prestige: "none" },
 	  { name: "Venset", rank: "Knight", prestige: "honored" },
 	  { name: "Jiggalator", rank: "Knight", prestige: "none" },
 	  { name: "Shoukan", rank: "Disciple", prestige: "none" },
@@ -133,8 +178,10 @@
 	  { name: "JohnLemon", rank: " Disciple", prestige: "none" },
 	  { name: "Uhtred", rank: "Initiate", prestige: "none" },
 	  { name: "Infirmus", rank: "Initiate", prestige: "none" },
-	  { name: "Xaxas", rank: "Candidate", prestige: "none" },
-	  { name: "QueenEmilia", rank: "Candidate", prestige: "none" },
+
+      // Candidates
+      { name: "Xaxas",      rank: "Candidate", prestige: "none" },
+      { name: "QueenEmilia", rank: "Candidate", prestige: "none" },
     ];
 
     // =========================
@@ -185,8 +232,8 @@
       }
 
       MEMBERS.forEach(m => {
-        const rank = safeText(m.rank);
-        const prestige = safeText(m.prestige || "none");
+        const rank = safeText(m.rank).trim();              // <-- trim rank
+        const prestige = normalize(m.prestige || "none");  // <-- normalize prestige key
 
         // Council displayed above
         if (normalize(rank) === "council") return;
@@ -204,7 +251,7 @@
         }
       }
 
-      // Header row (colored text, no dot)
+      // Header row
       const headerCells = PRESTIGES.map(p => {
         return `
           <th class="sticky-top prestige-head" style="--prestigeColor:${p.color}">
@@ -249,63 +296,54 @@
       table.innerHTML = thead + `<tbody>${rows}</tbody>`;
     }
 
-    // Run
-// =========================
-// Candidates
-// =========================
-function renderCandidates() {
-  const container = document.getElementById("candidateList");
+    // =========================
+    // Candidates
+    // =========================
+    function renderCandidates() {
+      const container = document.getElementById("candidateList");
 
-  const candidates = MEMBERS
-    .filter(m => normalize(m.rank) === "candidate")
-    .sort(sortNames);
+      const candidates = MEMBERS
+        .filter(m => normalize(m.rank) === "candidate")
+        .sort(sortNames);
 
-  if (candidates.length === 0) {
-    container.innerHTML = `<div class="empty-note">No candidates currently.</div>`;
-    return;
-  }
+      if (candidates.length === 0) {
+        container.innerHTML = `<div class="empty-note">No candidates currently.</div>`;
+        return;
+      }
 
-  container.innerHTML = candidates.map(m => `
-    <div class="candidate-entry">
-      ${safeText(m.name)}
-    </div>
-  `).join("");
-}
+      container.innerHTML = candidates.map(m => `
+        <div class="candidate-entry">${safeText(m.name)}</div>
+      `).join("");
+    }
 
-// =========================
-// Inactive Members
-// =========================
-function renderInactive() {
-  const container = document.getElementById("inactiveList");
+    // =========================
+    // Inactive Members
+    // =========================
+    function renderInactive() {
+      const container = document.getElementById("inactiveList");
 
-  const inactiveMembers = MEMBERS
-    .filter(m => m.inactive === true)
-    .sort(sortNames);
+      const inactiveMembers = MEMBERS
+        .filter(m => m.inactive === true)
+        .sort(sortNames);
 
-  if (inactiveMembers.length === 0) {
-    container.innerHTML = `<div class="empty-note">No inactive members.</div>`;
-    return;
-  }
+      if (inactiveMembers.length === 0) {
+        container.innerHTML = `<div class="empty-note">No inactive members.</div>`;
+        return;
+      }
 
-  container.innerHTML = inactiveMembers.map(m => `
-    <div class="inactive-entry">
-      ${safeText(m.name)}
-    </div>
-  `).join("");
-}
+      container.innerHTML = inactiveMembers.map(m => `
+        <div class="inactive-entry">${safeText(m.name)}</div>
+      `).join("");
+    }
 
-// =========================
-// Run Everything
-// =========================
-renderCouncil();
-renderRosterGrid();
-renderCandidates();
-renderInactive();
-	  
+    // =========================
+    // Run Everything
+    // =========================
+    renderCouncil();
+    renderRosterGrid();
+    renderCandidates();
+    renderInactive();
   </script>
 
 </body>
 </html>
-
-
-
