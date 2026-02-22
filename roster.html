@@ -4,14 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lost Academy — Roster</title>
-
   <link rel="stylesheet" href="style.css">
-
-  <!--
-    Sticky header fix + layering fixes.
-    This prevents the first row (Master) from being covered by the sticky THEAD.
-    If you prefer, you can move these rules into style.css instead.
-  -->
 </head>
 
 <body>
@@ -45,7 +38,6 @@
     <section class="panel council-panel">
       <h2>Council</h2>
       <p class="panel-subtext">The ruling council of the Lost Academy.</p>
-
       <div id="councilGrid" class="council-grid"></div>
     </section>
 
@@ -118,7 +110,7 @@
       { name: "Gallows", rank: "Council", prestige: "Council" },
       { name: "Tanulis", rank: "Council", prestige: "Council" },
 
-      // Roster      
+      // Roster
 	  { name: "BigChimpin", rank: "Master", prestige: "exalted", inactive: true },
       { name: "Yalanue", rank: "Knight", prestige: "none", inactive: true },
 	  { name: "Noble", rank: "Knight", prestige: "exalted" },
@@ -143,7 +135,7 @@
 	  { name: "Infirmus", rank: "Initiate", prestige: "none" },
 
       // Candidates
-      { name: "Xaxas",      rank: "Candidate", prestige: "none" },
+      { name: "Xaxas",       rank: "Candidate", prestige: "none" },
       { name: "QueenEmilia", rank: "Candidate", prestige: "none" },
     ];
 
@@ -195,14 +187,12 @@
       }
 
       MEMBERS.forEach(m => {
-        const rank = safeText(m.rank).trim();              // <-- trim rank
-        const prestige = normalize(m.prestige || "none");  // <-- normalize prestige key
+        const rank = safeText(m.rank).trim();
+        const prestige = normalize(m.prestige || "none");
 
-        // Council displayed above
         if (normalize(rank) === "council") return;
-
-        if (!grid[rank]) return;                 // ignore unknown ranks
-        if (!prestigeByKey[prestige]) return;    // ignore unknown prestiges
+        if (!grid[rank]) return;
+        if (!prestigeByKey[prestige]) return;
 
         grid[rank][prestige].push(m);
       });
@@ -232,6 +222,14 @@
         </thead>
       `;
 
+      // Spacer row (THIS is what prevents overlap forever)
+      const spacerRow = `
+        <tr class="head-spacer">
+          <th class="sticky-left rank-cell"></th>
+          ${PRESTIGES.map(() => `<td class="cell"></td>`).join("")}
+        </tr>
+      `;
+
       // Body rows
       const rows = RANKS.map(rank => {
         const cells = PRESTIGES.map(p => {
@@ -256,7 +254,7 @@
         `;
       }).join("");
 
-      table.innerHTML = thead + `<tbody>${rows}</tbody>`;
+      table.innerHTML = thead + `<tbody>${spacerRow}${rows}</tbody>`;
     }
 
     // =========================
@@ -299,9 +297,7 @@
       `).join("");
     }
 
-    // =========================
-    // Run Everything
-    // =========================
+    // Run
     renderCouncil();
     renderRosterGrid();
     renderCandidates();
@@ -310,4 +306,3 @@
 
 </body>
 </html>
-
