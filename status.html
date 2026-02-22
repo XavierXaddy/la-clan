@@ -7,29 +7,45 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
-  .servers-grid{
-    display: grid;
-    grid-template-columns: 1fr;   /* single column */
-    gap: 18px;
-    margin-top: 10px;
-  }
+  /* more space between server cards */
+.servers-grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;              /* was 18px */
+  margin-top: 16px;
+}
 
-     .server-card{
-      grid-template-columns: 220px 1fr; /* larger thumb column */
-      padding: 18px;
-  }
+/* slightly wider card + more padding */
+.server-card{
+  display: grid;          /* make sure this is set */
+  grid-template-columns: 240px 1fr;  /* bigger thumb column */
+  gap: 18px;
+  padding: 22px;
+  border-radius: 18px;
+}
 
-    .server-thumb img{
-      width: 220px;
-      height: 135px;
-    }
+/* center the thumbnail inside its column */
+.server-thumb{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    .server-title{
-      font-weight: 800;
-      letter-spacing: 0.4px;
-      margin-bottom: 6px;
-      font-size: 1.25rem;
-    }
+/* center the image itself */
+.server-thumb img{
+  width: 230px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+
+/* (optional) center the entire right side content too */
+.server-meta{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
     .server-sub{
       opacity: 0.86;
@@ -106,6 +122,14 @@
 
 .server-meta{
   text-align: center;
+}
+
+    .servers-grid{
+  justify-items: center;
+}
+
+.server-card{
+  width: min(1100px, 100%);
 }
 
 .row{
@@ -320,6 +344,7 @@ function q3NameToHtml(name) {
 
 </body>
 </html>
+
 
 
 
