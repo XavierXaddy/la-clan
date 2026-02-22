@@ -414,3 +414,30 @@ body {
   border: 1px solid rgba(255,255,255,0.06);
   background: rgba(255,255,255,0.02);
 }
+
+.roster-grid-wrap {
+  position: relative;
+  overflow: auto;
+}
+
+.roster-grid thead th.sticky-top {
+  top: 0;
+  z-index: 15;
+}
+
+.roster-grid th.sticky-left {
+  z-index: 5;
+}
+
+.roster-grid th.sticky-left.sticky-top {
+  z-index: 20;
+}
+
+.roster-grid {
+  border-spacing: 0;
+}
+
+.roster-grid tbody {
+  position: relative;
+  z-index: 1;
+}
