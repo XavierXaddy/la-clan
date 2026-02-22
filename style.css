@@ -35,7 +35,6 @@ body {
   margin: 0;
   animation: float 12s ease-in-out infinite;
 }
-
 .logo .word { white-space: nowrap; }
 
 /* Symbol */
@@ -54,9 +53,9 @@ body {
   letter-spacing: 0.08em;
 }
 
-/* Divider */
+/* Divider (responsive) */
 .divider {
-  width: 1175px;
+  width: min(1175px, 92vw);
   height: 1px;
   margin: 24px auto 0;
   background: linear-gradient(to right, transparent, rgba(120,170,255,0.4), transparent);
@@ -112,6 +111,7 @@ body {
 
 /* ===================== */
 /* Animations */
+/* ===================== */
 @keyframes pulse {
   0%, 100% { filter: drop-shadow(0 0 14px rgba(120, 170, 255, 0.45)); }
   50%      { filter: drop-shadow(0 0 22px rgba(120, 170, 255, 0.65)); }
@@ -124,6 +124,7 @@ body {
 
 /* ===================== */
 /* Responsive Tweaks */
+/* ===================== */
 @media (max-width: 600px) {
   .logo {
     font-size: 2.2rem;
@@ -136,7 +137,56 @@ body {
 }
 
 /* ===================== */
+/* Universal page container for ALL pages */
+/* ===================== */
+.page,
+.page-content {
+  width: min(1200px, 92vw);
+  margin: 0 auto;
+  padding: 22px 16px 60px; /* side padding prevents edge-kissing */
+}
+
+/* ===================== */
+/* Panels (shared) */
+/* ===================== */
+.panel{
+  margin-top: 22px;
+  padding: 22px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.panel-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.panel-head h2{
+  margin: 0;
+  font-size: 1.2rem;
+  letter-spacing: 0.3px;
+}
+
+.panel-link{
+  color: #e6edf3;
+  opacity: 0.8;
+  text-decoration: none;
+}
+.panel-link:hover{ opacity: 1; }
+
+.panel-subtext {
+  margin: 8px 0 0;
+  color: #9da7b1;
+  line-height: 1.6;
+}
+
+/* ===================== */
 /* Council */
+/* ===================== */
 .council-panel {
   border: 1px solid rgba(120,170,255,0.25);
   background: linear-gradient(145deg, rgba(120,170,255,0.08), rgba(255,255,255,0.02));
@@ -182,9 +232,9 @@ body {
 
 /* ===================== */
 /* Roster Grid — NEVER overlaps (spacer row) */
+/* ===================== */
 :root { --stickyHeadH: 56px; }
 
-/* Grid wrap */
 .roster-grid-wrap {
   margin-top: 16px;
   border-radius: 14px;
@@ -194,7 +244,6 @@ body {
   position: relative;
 }
 
-/* Grid table */
 .roster-grid {
   width: 100%;
   border-collapse: separate;
@@ -203,7 +252,6 @@ body {
   position: relative;
 }
 
-/* Base cells */
 .roster-grid th,
 .roster-grid td {
   padding: 10px 10px;
@@ -224,11 +272,9 @@ body {
   text-transform: uppercase;
 }
 
-/* widths */
 .corner { width: 150px; }
 .rank-cell { width: 150px; white-space: nowrap; text-align: left; }
 
-/* Sticky header */
 .roster-grid thead th.sticky-top {
   position: sticky;
   top: 0;
@@ -236,7 +282,6 @@ body {
   background: rgba(14, 17, 22, 0.95);
 }
 
-/* Sticky left column */
 .roster-grid th.sticky-left {
   position: sticky;
   left: 0;
@@ -244,13 +289,11 @@ body {
   background: rgba(14, 17, 22, 0.95);
 }
 
-/* Top-left corner */
 .roster-grid thead th.corner.sticky-left.sticky-top {
   z-index: 40;
   background: rgba(14, 17, 22, 0.98);
 }
 
-/* Spacer row that reserves space under sticky header (prevents overlap forever) */
 .head-spacer th,
 .head-spacer td {
   padding: 0 !important;
@@ -260,7 +303,6 @@ body {
   background: transparent;
 }
 
-/* Prestige header colored text */
 .prestige-label {
   color: var(--prestigeColor);
   font-weight: 700;
@@ -268,21 +310,17 @@ body {
   white-space: nowrap;
 }
 
-/* Cells */
 .cell.empty { opacity: 0.25; }
 .roster-grid td { text-align: center; }
 
-/* Member names — WRAP + allow rows to grow */
 .member {
   margin: 0;
   padding: 2px 0;
   background: transparent;
   border: none;
   display: block;
-
   white-space: normal;
   word-break: break-word;
-
   text-align: center;
   line-height: 1.2;
 }
@@ -296,6 +334,7 @@ body {
 
 /* ===================== */
 /* Candidates */
+/* ===================== */
 .candidate-panel {
   border: 1px solid rgba(255, 200, 120, 0.25);
   background: linear-gradient(145deg, rgba(255, 200, 120, 0.08), rgba(255,255,255,0.02));
@@ -326,6 +365,7 @@ body {
 
 /* ===================== */
 /* Inactive */
+/* ===================== */
 .inactive-panel {
   border: 1px solid rgba(255,255,255,0.08);
   background: rgba(255,255,255,0.02);
@@ -355,43 +395,9 @@ body {
   backdrop-filter: blur(6px);
 }
 
-/* ===== Home Layout ===== */
-.page{
-  width: min(1200px, 92vw);
-  margin: 0 auto;
-  padding: 22px 0 60px;
-}
-
-.panel{
-  margin-top: 22px;
-  padding: 18px 18px;
-  border-radius: 16px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-.panel-head{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 14px;
-}
-
-.panel-head h2{
-  margin: 0;
-  font-size: 1.2rem;
-  letter-spacing: 0.3px;
-}
-
-.panel-link{
-  color: #e6edf3;
-  opacity: 0.8;
-  text-decoration: none;
-}
-.panel-link:hover{ opacity: 1; }
-
-/* ===== Hero ===== */
+/* ===================== */
+/* Home-only pieces */
+/* ===================== */
 .hero{
   margin: 0 auto;
   max-width: 1100px;
@@ -407,7 +413,6 @@ body {
   height: auto;
 }
 
-/* ===== Buttons ===== */
 .btn{
   display: inline-flex;
   align-items: center;
@@ -427,7 +432,6 @@ body {
   background: rgba(255,255,255,0.14);
 }
 
-/* ===== News ===== */
 .news-grid{
   display: grid;
   gap: 14px;
@@ -480,7 +484,6 @@ body {
 }
 .news-more:hover{ opacity: 1; }
 
-/* ===== About / Stats ===== */
 .about-grid{
   display: grid;
   gap: 16px;
@@ -532,7 +535,7 @@ body {
   border-bottom-color: rgba(255,255,255,0.55);
 }
 
-/* ===== Gallery ===== */
+/* Gallery */
 .gallery-controls{
   display: flex;
   gap: 10px;
@@ -577,7 +580,7 @@ body {
 }
 
 .g-item{
-  flex: 0 0 calc(20% - 9.6px); /* ~5 at a time on wide screens */
+  flex: 0 0 calc(20% - 9.6px);
   scroll-snap-align: start;
   border-radius: 12px;
   overflow: hidden;
@@ -598,50 +601,22 @@ body {
   opacity: 0.75;
 }
 
-/* ===== Responsive ===== */
+/* Home responsive */
 @media (max-width: 980px){
   .news-grid{ grid-template-columns: 1fr; }
   .about-grid{ grid-template-columns: 1fr; }
-  .g-item{ flex-basis: calc(50% - 6px); } /* 2 at a time */
+  .g-item{ flex-basis: calc(50% - 6px); }
   .g-item img{ height: 160px; }
 }
 
-/* ===== Universal page container for ALL pages ===== */
-.page,
-.page-content {
-  width: min(1200px, 92vw);
-  margin: 0 auto;
-  padding: 22px 0 60px;
-}
-
 /* ===================== */
-/* Fix: Non-home pages (page-content) felt full-width */
-/* Only affects archive/roster/status because they use .page-content */
+/* Archive (Card Timeline) */
 /* ===================== */
-.page-content{
-  width: min(1200px, 92vw);
-  margin: 0 auto;
-  padding: 22px 16px 60px; /* add side padding so panels never kiss the edges */
-}
-
-/* keep panels consistent inside page-content */
-.page-content .panel{
-  margin: 22px 0;
-  padding: 22px;
-}
-
-/* roster/status/archive: give inner wrappers breathing room */
-.page-content .roster-grid-wrap,
-.page-content .servers-grid{
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* ===== Archive (Card Timeline) ===== */
 .archive-list{
-  margin-top: 14px;
+  margin-top: 10px;
   display: grid;
   gap: 14px;
+  padding: 12px; /* gutter inside the panel */
 }
 
 .archive-entry{
@@ -711,189 +686,53 @@ body {
   .a-photo img{ height: 140px; }
 }
 
-/* ===== Archive Tag Colors ===== */
+/* Archive tag base (pill style) */
 .archive-tag{
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
 }
 
-/* Event */
+/* Tag colors */
 .archive-tag.event{
   color: #ff9a2e;
   background: rgba(255, 154, 46, 0.12);
   border-color: rgba(255, 154, 46, 0.35);
 }
 
-/* Promotion */
 .archive-tag.promotion{
   color: #6ea8ff;
   background: rgba(110, 168, 255, 0.12);
   border-color: rgba(110, 168, 255, 0.35);
 }
 
-/* New Member */
 .archive-tag.newmember{
   color: #40ff40;
   background: rgba(64, 255, 64, 0.12);
   border-color: rgba(64, 255, 64, 0.35);
 }
 
-/* Clan Ally Event */
 .archive-tag.ally{
   color: #c77dff;
   background: rgba(199, 125, 255, 0.12);
   border-color: rgba(199, 125, 255, 0.35);
 }
 
-/* Major Event */
 .archive-tag.major{
   color: #ff4d4d;
   background: rgba(255, 77, 77, 0.12);
   border-color: rgba(255, 77, 77, 0.35);
 }
 
-/* Other / fallback */
 .archive-tag.other{
   color: #9da7b1;
   background: rgba(157, 167, 177, 0.10);
   border-color: rgba(157, 167, 177, 0.25);
-}
-
-/* ===== Archive (Card Timeline) ===== */
-.archive-list{
-  margin-top: 14px;
-  display: grid;
-  gap: 14px;
-}
-
-.archive-entry{
-  padding: 16px;
-  border-radius: 16px;
-  background: rgba(0,0,0,0.22);
-  border: 1px solid rgba(255,255,255,0.08);
-}
-
-.archive-top{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-
-.archive-date{
-  font-size: 0.85rem;
-  opacity: 0.8;
-  white-space: nowrap;
-}
-
-.archive-title{
-  margin: 0 0 6px;
-  font-size: 1.1rem;
-}
-
-.archive-desc{
-  margin: 0;
-  line-height: 1.55;
-  opacity: 0.92;
-  color: #9da7b1;
-}
-
-.archive-links{
-  margin-top: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 14px;
-}
-
-/* photos grid */
-.archive-photos{
-  margin-top: 12px;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.a-photo{
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(0,0,0,0.20);
-  display: block;
-}
-
-.a-photo img{
-  width: 100%;
-  height: 120px;
-  object-fit: cover;
-  display: block;
-}
-
-@media (max-width: 900px){
-  .archive-photos{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .a-photo img{ height: 140px; }
-}
-
-/* ===== Archive Tag Colors ===== */
-.archive-tag{
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-
-.archive-tag.event{
-  color: #ff9a2e;
-  background: rgba(255, 154, 46, 0.12);
-  border: 1px solid rgba(255, 154, 46, 0.35);
-}
-
-.archive-tag.promotion{
-  color: #6ea8ff;
-  background: rgba(110, 168, 255, 0.12);
-  border: 1px solid rgba(110, 168, 255, 0.35);
-}
-
-.archive-tag.newmember{
-  color: #40ff40;
-  background: rgba(64, 255, 64, 0.12);
-  border: 1px solid rgba(64, 255, 64, 0.35);
-}
-
-.archive-tag.ally{
-  color: #c77dff;
-  background: rgba(199, 125, 255, 0.12);
-  border: 1px solid rgba(199, 125, 255, 0.35);
-}
-
-.archive-tag.major{
-  color: #ff4d4d;
-  background: rgba(255, 77, 77, 0.12);
-  border: 1px solid rgba(255, 77, 77, 0.35);
-}
-
-.archive-tag.other{
-  color: #9da7b1;
-  background: rgba(157, 167, 177, 0.10);
-  border: 1px solid rgba(157, 167, 177, 0.25);
-}
-
-/* ===== Archive spacing fix (Archive only) ===== */
-.archive-list{
-  padding: 8px;              /* gives the archive list its own gutter */
-}
-
-.archive-entry{
-  max-width: 100%;
-  margin: 0;                 /* keep cards aligned */
-}
-
-/* If you want entries slightly inset even inside panel */
-@media (min-width: 700px){
-  .archive-list{
-    padding: 12px;
-  }
-}
-
-/* Extra breathing room between panel border and archive cards */
-.page-content .panel .archive-list{
-  margin-top: 10px;
 }
