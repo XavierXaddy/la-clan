@@ -61,6 +61,16 @@
 	  <div id="candidateList" class="candidate-list"></div>
 	</section>
 
+	  <!-- Inactive Members -->
+<section class="panel inactive-panel">
+  <h2>Inactive Members</h2>
+  <p class="panel-subtext">
+    Members currently inactive, on leave, or retired.
+  </p>
+
+  <div id="inactiveList" class="inactive-list"></div>
+</section>
+	  
   </main>
 
   <script>
@@ -97,20 +107,20 @@
     const MEMBERS = [
       // Council (example — replace with yours)
       { name: "Xavier",  rank: "Council", prestige: "Council Leader" },
-      { name: "Makha",   rank: "Council", prestige: "Council Leader" },
+	  { name: "Makha",  rank: "Council", prestige: "Council Leader", inactive: true },
       { name: "Gallows", rank: "Council", prestige: "Council" },
       { name: "Tanulis", rank: "Council", prestige: "Council" },
 
       // Examples (replace with your real roster)
-      { name: "BigChimpin", rank: "Master", prestige: "exalted" },
-      { name: "Yalanue", rank: "Knight", prestige: "none" },
+      { name: "BigChimpin", rank: "Master", prestige: "exalted", inactive: true },
+      { name: "Yalanue", rank: "Knight", prestige: "none", inactive: true },
 	  { name: "Noble", rank: "Knight", prestige: "exalted" },
 	  { name: "Palimuna", rank: "Scholar", prestige: "none" },
 	  { name: "DemonKing", rank: "Apprentice", prestige: "none" },
 	  { name: "Bongrip", rank: "Disciple", prestige: "none" },
       { name: "Shyrack",    rank: "Master", prestige: "revered" },
       { name: "Mystra",     rank: "Knight", prestige: "none" },
-      { name: "Veradust",   rank: "Scholar", prestige: "paragon" },
+      { name: "Veradust",   rank: "Scholar", prestige: "paragon", inactive: true },
       { name: "Thesseron",  rank: "Initiate", prestige: "paragon" },
       { name: "Leotrix",    rank: "Initiate", prestige: "none" },
       { name: "Silence",    rank: "Initiate", prestige: "none" },
@@ -241,9 +251,10 @@
     }
 
     // Run
-    renderCouncil();
-    renderRosterGrid();
-	function renderCandidates() {
+// =========================
+// Candidates
+// =========================
+function renderCandidates() {
   const container = document.getElementById("candidateList");
 
   const candidates = MEMBERS
@@ -261,11 +272,39 @@
     </div>
   `).join("");
 }
+
+// =========================
+// Inactive Members
+// =========================
+function renderInactive() {
+  const container = document.getElementById("inactiveList");
+
+  const inactiveMembers = MEMBERS
+    .filter(m => m.inactive === true)
+    .sort(sortNames);
+
+  if (inactiveMembers.length === 0) {
+    container.innerHTML = `<div class="empty-note">No inactive members.</div>`;
+    return;
+  }
+
+  container.innerHTML = inactiveMembers.map(m => `
+    <div class="inactive-entry">
+      ${safeText(m.name)}
+    </div>
+  `).join("");
+}
+
+// =========================
+// Run Everything
+// =========================
 renderCouncil();
 renderRosterGrid();
 renderCandidates();
-
+renderInactive();
+	  
   </script>
 
 </body>
 </html>
+
