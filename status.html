@@ -15,26 +15,25 @@
   margin-top: 16px;
 }
 
-/* slightly wider card + more padding */
 .server-card{
   width: min(1100px, 100%);
   display: grid;
-  grid-template-columns: 320px 1fr; /* bigger left column */
-  gap: 26px;
+  grid-template-columns: 1fr;   /* stack everything */
+  text-align: center;
+  justify-items: center;        /* center ALL children */
   padding: 26px;
-  border-radius: 18px;
-  align-items: center;
+  gap: 14px;
 }
 
 .server-thumb{
+  width: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
 .server-thumb img{
-  width: 300px;
-  height: 180px;
+  width: 320px;
+  height: 190px;
   object-fit: cover;
   border-radius: 14px;
   display: block;
@@ -349,6 +348,7 @@ const players = playerSource
 
 </body>
 </html>
+
 
 
 
