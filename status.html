@@ -189,7 +189,7 @@
 
     // This must exist on your site:
     // https://la-clan.com/status/status.json
-    const STATUS_JSON = "https://statusapi.la-clan.com/status/status.json";
+    const STATUS_JSON = "https://statusapi.la-clan.com/status/status.json?v=" + Date.now();
 
     function cleanMapName(map) {
       map = (map || "").trim();
@@ -314,7 +314,7 @@ const players = playerSource
 
             <div class="server-sub row">
               <span class="pill ${pillClass}"><span class="dot"></span>${pillText}</span>
-              <span class="kv">${esc(s.host)}:${esc(s.port)}</span>
+              <span class="kv">${esc(s.ip || s.host)}:${esc(s.port)}</span>
             </div>
 
             <div class="server-sub">
@@ -337,7 +337,7 @@ const players = playerSource
       const note = document.getElementById("statusNote");
 
       try {
-        const res = await fetch(STATUS_JSON, { cache: "no-store" });
+        const res = await fetch(STATUS_JSON);
         if (!res.ok) throw new Error("HTTP " + res.status);
         const data = await res.json();
 
@@ -355,6 +355,7 @@ const players = playerSource
 
 </body>
 </html>
+
 
 
 
