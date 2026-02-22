@@ -428,21 +428,16 @@ body {
 
 /* ===== Hero ===== */
 .hero{
-  position: relative;
+  margin: 0 auto;
   border-radius: 18px;
   overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.03);
+  max-width: 1100px;
 }
 
 .hero-img{
+  display: block;
   width: 100%;
   height: auto;
-  display: block;
-  /* optional: if you want a consistent height:
-     height: 420px;
-     object-fit: cover;
-  */
 }
 
 .hero-overlay{
@@ -675,3 +670,4 @@ body {
   .g-item{ flex-basis: 85%; } /* 1-ish at a time for small screens */
   .hero-overlay{ padding: 14px; }
 }
+
