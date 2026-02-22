@@ -17,26 +17,26 @@
 
 /* slightly wider card + more padding */
 .server-card{
-  display: grid;          /* make sure this is set */
-  grid-template-columns: 240px 1fr;  /* bigger thumb column */
-  gap: 18px;
-  padding: 22px;
+  width: min(1100px, 100%);
+  display: grid;
+  grid-template-columns: 320px 1fr; /* bigger left column */
+  gap: 26px;
+  padding: 26px;
   border-radius: 18px;
+  align-items: center;
 }
 
-/* center the thumbnail inside its column */
 .server-thumb{
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* center the image itself */
 .server-thumb img{
-  width: 230px;
-  height: 140px;
+  width: 300px;
+  height: 180px;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 14px;
   display: block;
 }
 
@@ -349,6 +349,7 @@ const players = playerSource
 
 </body>
 </html>
+
 
 
 
