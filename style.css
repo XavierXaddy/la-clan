@@ -251,8 +251,9 @@ body {
   padding: 10px 10px;
   border-bottom: 1px solid rgba(255,255,255,0.06);
   border-right: 1px solid rgba(255,255,255,0.04);
-  vertical-align: middle;
-  height: 54px;
+  vertical-align: top;
+  min-height: 54px;
+  height: auto;
   background-clip: padding-box;
 }
 
@@ -328,8 +329,9 @@ body {
   background: transparent;
   border: none;
   display: block;
-  white-space: nowrap;
-  overflow: hidden;
+  white-space: normal;
+  overflow: visible;
+  word-break: break-word;
   text-align: center;
   line-height: 1.2;
 }
@@ -414,4 +416,5 @@ body {
   border: 1px solid rgba(255,255,255,0.18);
   backdrop-filter: blur(6px);
 }
+
 
