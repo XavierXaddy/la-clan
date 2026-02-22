@@ -285,11 +285,16 @@ function q3NameToHtml(name) {
       const numPlayers = s.numPlayers ?? (s.players ? s.players.length : 0);
       const maxPlayers = s.maxPlayers ?? null;
 
-      const players = (s.players || [])
-        .filter(p => (p && (p.name ?? "").toString().trim().length > 0))
-        .slice(0, 24)
-        .map(p => `<div class="pname">${q3NameToHtml(p.name)}</div>`)
-        .join("");
+const playerSource =
+  (s.players_raw && s.players_raw.length) ? s.players_raw :
+  (s.players && s.players.length) ? s.players :
+  [];
+
+const players = playerSource
+  .filter(p => (p && (p.name ?? "").toString().trim().length > 0))
+  .slice(0, 24)
+  .map(p => `<div class="pname">${q3NameToHtml(p.name)}</div>`)
+  .join("");
 
       return `
         <div class="server-card">
@@ -344,6 +349,7 @@ function q3NameToHtml(name) {
 
 </body>
 </html>
+
 
 
 
