@@ -12,43 +12,6 @@
     This prevents the first row (Master) from being covered by the sticky THEAD.
     If you prefer, you can move these rules into style.css instead.
   -->
-  <style>
-    /* Adjust this if your header row is taller/shorter */
-    :root { --rosterHeadH: 44px; }
-
-    /* Ensure the scroll container has room above for the sticky header */
-    .roster-grid-wrap{
-      overflow: auto;          /* you likely already have this */
-      position: relative;
-      padding-top: var(--rosterHeadH);
-    }
-
-    /* Pull the table back up so it stays visually aligned */
-    .roster-grid{
-      margin-top: calc(var(--rosterHeadH) * -1);
-      border-collapse: separate; /* helps sticky layering in some browsers */
-      border-spacing: 0;
-    }
-
-    /* Sticky header */
-    .roster-grid thead th.sticky-top{
-      position: sticky;
-      top: 0;
-      z-index: 5;
-    }
-
-    /* Sticky left column */
-    .roster-grid th.sticky-left{
-      position: sticky;
-      left: 0;
-      z-index: 4;
-    }
-
-    /* Top-left corner cell should be above both sticky header + sticky left */
-    .roster-grid th.corner{
-      z-index: 6;
-    }
-  </style>
 </head>
 
 <body>
@@ -347,3 +310,4 @@
 
 </body>
 </html>
+
