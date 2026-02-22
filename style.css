@@ -233,7 +233,8 @@ body {
   border-radius: 14px;
   border: 1px solid rgba(255,255,255,0.06);
   background: rgba(255,255,255,0.02);
-  overflow: hidden; /* clean edges */
+  overflow: auto;            /* allow scroll */
+  position: relative;        /* stacking context */
 }
 
 /* Grid table */
@@ -241,7 +242,8 @@ body {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  table-layout: fixed; /* fit width */
+  table-layout: fixed;
+  position: relative;        /* predictable layering */
 }
 
 .roster-grid th,
@@ -249,7 +251,9 @@ body {
   padding: 10px 10px;
   border-bottom: 1px solid rgba(255,255,255,0.06);
   border-right: 1px solid rgba(255,255,255,0.04);
-  vertical-align: top;
+  vertical-align: middle;
+  height: 54px;
+  background-clip: padding-box;
 }
 
 .roster-grid tr:last-child td,
@@ -258,33 +262,42 @@ body {
 .roster-grid th {
   background: rgba(255,255,255,0.02);
   color: #9da7b1;
-  font-size: 0.70rem;         /* slightly smaller headers */
+  font-size: 0.70rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
+/* widths */
 .corner { width: 150px; }
+.rank-cell { width: 150px; white-space: nowrap; }
 
-/* Sticky header row */
-.sticky-top {
+/* === Sticky behavior (FIXED + consistent) === */
+/* Adjust this if your sticky nav height changes */
+:root { --navOffset: 58px; }
+
+/* Top sticky header row */
+.roster-grid th.sticky-top {
   position: sticky;
-  top: 58px;
-  z-index: 5;
-  backdrop-filter: blur(6px);
-  background: rgba(14, 17, 22, 0.82);
+  top: var(--navOffset);
+  z-index: 20;
+  background: rgba(14, 17, 22, 0.95);
+  backdrop-filter: none; /* prevents smear/overlap artifacts */
 }
 
-/* Sticky left rank column */
-.sticky-left {
+/* Left sticky rank column */
+.roster-grid th.sticky-left {
   position: sticky;
   left: 0;
-  z-index: 6;
-  backdrop-filter: blur(6px);
-  background: rgba(14, 17, 22, 0.86);
+  z-index: 30;
+  background: rgba(14, 17, 22, 0.95);
+  backdrop-filter: none;
 }
 
-/* Top-left corner above everything */
-.corner.sticky-left.sticky-top { z-index: 7; }
+/* Top-left corner cell */
+.roster-grid th.corner.sticky-left.sticky-top {
+  z-index: 40;
+  background: rgba(14, 17, 22, 0.98);
+}
 
 /* Prestige header colored text */
 .prestige-label {
@@ -294,47 +307,33 @@ body {
   white-space: nowrap;
 }
 
-/* Rank label */
-.rank-cell {
-  width: 150px;
-  white-space: nowrap;
-}
-
 /* Cells */
 .cell { min-height: 56px; }
 .cell.empty { opacity: 0.25; }
 
-/* Member names: one line, smaller, auto-fit by JS if needed */
+.roster-grid td { text-align: center; }
+.rank-cell { text-align: left; }
+
+/* Member names */
 .member {
-  margin: 4px 0;            /* tighter vertical spacing */
+  margin: 0;
   padding: 2px 0;
   background: transparent;
   border: none;
-
   display: block;
-  white-space: nowrap;       /* keep one line */
-  overflow: hidden;          /* prevents spill into other cells */
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: center;
+  line-height: 1.2;
 }
 
 .prestige-text {
   color: var(--prestigeColor);
   font-weight: 600;
-  font-size: 0.90rem;        /* base size; JS can reduce if needed */
+  font-size: 0.90rem;
   letter-spacing: 0.04em;
 }
-.roster-grid td {
-  text-align: center;
-}
-.rank-cell {
-  text-align: left;
-}
-.roster-grid td {
-  text-align: center;
-  vertical-align: middle;
-}
-.member {
-  text-align: center;
-}
+
 /* ===================== */
 /* Candidate Panel */
 /* ===================== */
@@ -373,20 +372,7 @@ body {
   border-color: rgba(255, 200, 120, 0.35);
 }
 
-.roster-grid td,
-.roster-grid th {
-  height: 54px;              /* consistent row height */
-  vertical-align: middle;    /* center content vertically */
-}
-
-.member {
-  margin: 0;
-  line-height: 1.2;
-}
-
-.cell {
-  padding: 6px 8px;          /* reduce excess spacing */
-}
+.cell { padding: 6px 8px; }
 
 .rank-cell {
   font-size: 0.8rem;
@@ -415,33 +401,7 @@ body {
   background: rgba(255,255,255,0.02);
 }
 
-.roster-grid-wrap {
-  position: relative;
-  overflow: auto;
-}
-
-.roster-grid thead th.sticky-top {
-  top: 0;
-  z-index: 15;
-}
-
-.roster-grid th.sticky-left {
-  z-index: 5;
-}
-
-.roster-grid th.sticky-left.sticky-top {
-  z-index: 20;
-}
-
-.roster-grid {
-  border-spacing: 0;
-}
-
-.roster-grid tbody {
-  position: relative;
-  z-index: 1;
-}
-
+/* Status page player bubbles (kept from your status work) */
 .pname{
   background: rgba(255,255,255,0.10);
   border: 1px solid rgba(255,255,255,0.18);
