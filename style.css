@@ -228,15 +228,17 @@ body {
 }
 
 /* Grid wrap */
-.roster-grid-wrap {
-  margin-top: 16px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.06);
-  background: rgba(255,255,255,0.02);
-  overflow: auto;            /* allow scroll */
-  position: relative;        /* stacking context */
+.roster-grid-wrap{
+  --stickyHeadH: 54px;          /* height of the sticky header row */
+  padding-top: var(--stickyHeadH);
+  position: relative;
+  overflow: auto;
 }
 
+/* keep sticky header stuck to the top of the scroll area */
+.roster-grid th.sticky-top{
+  top: 0 !important;            /* IMPORTANT: stick inside the wrapper */
+}
 /* Grid table */
 .roster-grid {
   width: 100%;
@@ -407,3 +409,4 @@ body {
   border: 1px solid rgba(255,255,255,0.18);
   backdrop-filter: blur(6px);
 }
+
