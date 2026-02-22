@@ -72,7 +72,6 @@ body {
   top: 0;
   z-index: 9999;
   width: 100%;
-
   padding: 18px 0;
 
   backdrop-filter: blur(6px);
@@ -144,6 +143,12 @@ body {
   line-height: 1.6;
 }
 
+.panel-subtext {
+  margin: 8px 0 0;
+  color: #9da7b1;
+  line-height: 1.6;
+}
+
 /* ===================== */
 /* Animations */
 /* ===================== */
@@ -174,16 +179,8 @@ body {
 }
 
 /* ===================== */
-/* Roster / Council Styling */
-/* ===================== */
-
-.panel-subtext {
-  margin: 8px 0 0;
-  color: #9da7b1;
-  line-height: 1.6;
-}
-
 /* Council */
+/* ===================== */
 .council-panel {
   border: 1px solid rgba(120,170,255,0.25);
   background: linear-gradient(145deg, rgba(120,170,255,0.08), rgba(255,255,255,0.02));
@@ -227,6 +224,12 @@ body {
   text-shadow: 0 0 12px rgba(255, 204, 102, 0.25);
 }
 
+/* ===================== */
+/* Roster Grid */
+/* ===================== */
+
+:root { --rosterHeadH: 74px; }
+
 /* Grid wrap */
 .roster-grid-wrap {
   margin-top: 16px;
@@ -235,6 +238,8 @@ body {
   background: rgba(255,255,255,0.02);
   overflow: auto;
   position: relative;
+
+  padding-top: var(--rosterHeadH);
 }
 
 /* Grid table */
@@ -244,6 +249,8 @@ body {
   border-spacing: 0;
   table-layout: fixed;
   position: relative;
+
+  margin-top: calc(var(--rosterHeadH) * -1);
 }
 
 .roster-grid th,
@@ -251,9 +258,11 @@ body {
   padding: 10px 10px;
   border-bottom: 1px solid rgba(255,255,255,0.06);
   border-right: 1px solid rgba(255,255,255,0.04);
+
   vertical-align: top;
   min-height: 54px;
   height: auto;
+
   background-clip: padding-box;
 }
 
@@ -270,39 +279,32 @@ body {
 
 /* widths */
 .corner { width: 150px; }
-.rank-cell { width: 150px; white-space: nowrap; }
+.rank-cell { width: 150px; white-space: nowrap; text-align: left; }
 
-/* ===== Sticky roster header FIX (single system) ===== */
-:root { --rosterHeadH: 54px; } /* match your row height */
-
-.roster-grid-wrap{
-  /* keep your existing settings, add this line: */
-  padding-top: var(--rosterHeadH);
+/* Header sizing */
+.roster-grid thead th {
+  height: var(--rosterHeadH);
+  vertical-align: middle;
 }
 
-.roster-grid{
-  /* keep your existing settings, add this line: */
-  margin-top: calc(var(--rosterHeadH) * -1);
-}
-
-/* Sticky header sticks to TOP OF THE SCROLL CONTAINER */
-.roster-grid th.sticky-top{
+/* Sticky header */
+.roster-grid th.sticky-top {
   position: sticky;
-  top: 0;                 /* IMPORTANT */
+  top: 0;
   z-index: 20;
   background: rgba(14, 17, 22, 0.95);
 }
 
 /* Sticky left column */
-.roster-grid th.sticky-left{
+.roster-grid th.sticky-left {
   position: sticky;
   left: 0;
   z-index: 30;
   background: rgba(14, 17, 22, 0.95);
 }
 
-/* Top-left corner above both */
-.roster-grid th.corner.sticky-left.sticky-top{
+/* Top-left corner */
+.roster-grid th.corner.sticky-left.sticky-top {
   z-index: 40;
   background: rgba(14, 17, 22, 0.98);
 }
@@ -316,11 +318,8 @@ body {
 }
 
 /* Cells */
-.cell { min-height: 56px; }
 .cell.empty { opacity: 0.25; }
-
 .roster-grid td { text-align: center; }
-.rank-cell { text-align: left; }
 
 /* Member names */
 .member {
@@ -329,9 +328,11 @@ body {
   background: transparent;
   border: none;
   display: block;
+
   white-space: normal;
   overflow: visible;
   word-break: break-word;
+
   text-align: center;
   line-height: 1.2;
 }
@@ -344,7 +345,7 @@ body {
 }
 
 /* ===================== */
-/* Candidate Panel */
+/* Candidates */
 /* ===================== */
 
 .candidate-panel {
@@ -381,12 +382,9 @@ body {
   border-color: rgba(255, 200, 120, 0.35);
 }
 
-.cell { padding: 6px 8px; }
-
-.rank-cell {
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
-}
+/* ===================== */
+/* Inactive */
+/* ===================== */
 
 .inactive-panel {
   border: 1px solid rgba(255,255,255,0.08);
@@ -410,11 +408,9 @@ body {
   background: rgba(255,255,255,0.02);
 }
 
-/* Status page player bubbles (kept from your status work) */
-.pname{
+/* Status page player bubbles */
+.pname {
   background: rgba(255,255,255,0.10);
   border: 1px solid rgba(255,255,255,0.18);
   backdrop-filter: blur(6px);
 }
-
-
