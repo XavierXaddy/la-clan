@@ -372,3 +372,45 @@ body {
   transform: translateY(-1px);
   border-color: rgba(255, 200, 120, 0.35);
 }
+
+.roster-grid td,
+.roster-grid th {
+  height: 54px;              /* consistent row height */
+  vertical-align: middle;    /* center content vertically */
+}
+
+.member {
+  margin: 0;
+  line-height: 1.2;
+}
+
+.cell {
+  padding: 6px 8px;          /* reduce excess spacing */
+}
+
+.rank-cell {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+}
+
+.inactive-panel {
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+}
+
+.inactive-list {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.inactive-entry {
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.55);
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
+}
