@@ -15,18 +15,26 @@
   margin-top: 16px;
 }
 
+ .servers-grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+  margin-top: 16px;
+  justify-items: center;
+}
+
 .server-card{
   width: min(1100px, 100%);
   display: grid;
-  grid-template-columns: 1fr;   /* stack everything */
+  grid-template-columns: 1fr;   /* stacked layout */
+  gap: 16px;
+  padding: 28px;
+  border-radius: 18px;
   text-align: center;
-  justify-items: center;        /* center ALL children */
-  padding: 26px;
-  gap: 14px;
+  align-items: center;
 }
 
 .server-thumb{
-  width: 100%;
   display: flex;
   justify-content: center;
 }
@@ -39,12 +47,11 @@
   display: block;
 }
 
-/* (optional) center the entire right side content too */
 .server-meta{
   display: flex;
   flex-direction: column;
-  justify-content: center;
-}
+  align-items: center;
+}   
 
     .server-sub{
       opacity: 0.86;
@@ -348,6 +355,7 @@ const players = playerSource
 
 </body>
 </html>
+
 
 
 
