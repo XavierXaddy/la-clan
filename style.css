@@ -179,8 +179,9 @@ body {
 }
 
 /* ===================== */
-/* Council */
+/* Roster / Council Styling */
 /* ===================== */
+
 .council-panel {
   border: 1px solid rgba(120,170,255,0.25);
   background: linear-gradient(145deg, rgba(120,170,255,0.08), rgba(255,255,255,0.02));
@@ -225,10 +226,11 @@ body {
 }
 
 /* ===================== */
-/* Roster Grid */
+/* Roster Grid (stable sticky) */
 /* ===================== */
 
-:root { --rosterHeadH: 74px; }
+/* Fixed header height so the compensation is deterministic */
+:root { --rosterHeadH: 56px; }
 
 /* Grid wrap */
 .roster-grid-wrap {
@@ -239,6 +241,7 @@ body {
   overflow: auto;
   position: relative;
 
+  /* reserve space so first row is never hidden under sticky header */
   padding-top: var(--rosterHeadH);
 }
 
@@ -250,19 +253,17 @@ body {
   table-layout: fixed;
   position: relative;
 
+  /* pull table back up so header sits visually correct */
   margin-top: calc(var(--rosterHeadH) * -1);
 }
 
+/* Base cells */
 .roster-grid th,
 .roster-grid td {
   padding: 10px 10px;
   border-bottom: 1px solid rgba(255,255,255,0.06);
   border-right: 1px solid rgba(255,255,255,0.04);
-
-  vertical-align: top;
-  min-height: 54px;
-  height: auto;
-
+  vertical-align: middle;
   background-clip: padding-box;
 }
 
@@ -277,18 +278,18 @@ body {
   text-transform: uppercase;
 }
 
-/* widths */
-.corner { width: 150px; }
-.rank-cell { width: 150px; white-space: nowrap; text-align: left; }
-
-/* Header sizing */
+/* Fixed header row height (prevents growth that breaks the offset) */
 .roster-grid thead th {
   height: var(--rosterHeadH);
   vertical-align: middle;
 }
 
+/* widths */
+.corner { width: 150px; }
+.rank-cell { width: 150px; white-space: nowrap; text-align: left; }
+
 /* Sticky header */
-.roster-grid th.sticky-top {
+.roster-grid thead th.sticky-top {
   position: sticky;
   top: 0;
   z-index: 20;
@@ -296,15 +297,16 @@ body {
 }
 
 /* Sticky left column */
-.roster-grid th.sticky-left {
+.roster-grid tbody th.sticky-left,
+.roster-grid thead th.sticky-left {
   position: sticky;
   left: 0;
   z-index: 30;
   background: rgba(14, 17, 22, 0.95);
 }
 
-/* Top-left corner */
-.roster-grid th.corner.sticky-left.sticky-top {
+/* Top-left corner above both */
+.roster-grid thead th.corner.sticky-left.sticky-top {
   z-index: 40;
   background: rgba(14, 17, 22, 0.98);
 }
@@ -314,11 +316,13 @@ body {
   color: var(--prestigeColor);
   font-weight: 700;
   letter-spacing: 0.14em;
-  white-space: nowrap;
+  white-space: nowrap; /* IMPORTANT: prevents header height changes */
 }
 
 /* Cells */
+.cell { min-height: 56px; }
 .cell.empty { opacity: 0.25; }
+
 .roster-grid td { text-align: center; }
 
 /* Member names */
@@ -329,9 +333,10 @@ body {
   border: none;
   display: block;
 
-  white-space: normal;
-  overflow: visible;
-  word-break: break-word;
+  /* Keep deterministic height behavior (no wrap) */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   text-align: center;
   line-height: 1.2;
@@ -345,7 +350,7 @@ body {
 }
 
 /* ===================== */
-/* Candidates */
+/* Candidate Panel */
 /* ===================== */
 
 .candidate-panel {
@@ -382,8 +387,14 @@ body {
   border-color: rgba(255, 200, 120, 0.35);
 }
 
+/* Rank cell typography (kept, but not conflicting) */
+.rank-cell {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+}
+
 /* ===================== */
-/* Inactive */
+/* Inactive Members */
 /* ===================== */
 
 .inactive-panel {
@@ -408,8 +419,8 @@ body {
   background: rgba(255,255,255,0.02);
 }
 
-/* Status page player bubbles */
-.pname {
+/* Status page player bubbles (kept from your status work) */
+.pname{
   background: rgba(255,255,255,0.10);
   border: 1px solid rgba(255,255,255,0.18);
   backdrop-filter: blur(6px);
