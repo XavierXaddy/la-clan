@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Lost Academy — Status</title>
+  <title>Lost Academy — Server Status</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
       <span class="word">Academy</span>
     </h1>
 
-    <p class="tagline">Server Status and Tracker - Under Construction</p>
+    <p class="tagline">Server Status</p>
 
     <div class="divider"></div>
   </header>
@@ -31,12 +31,256 @@
 
   <main class="page-content">
 
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lost Academy — Status</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Status-specific styling (safe to move into style.css later) -->
+  <style>
+    .servers-grid{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 18px;
+      margin-top: 10px;
+    }
+
+    .server-card{
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 14px;
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    .server-thumb img{
+      width: 170px;
+      height: 105px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .server-title{
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      margin-bottom: 6px;
+      font-size: 1.05rem;
+    }
+
+    .server-sub{
+      opacity: 0.86;
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+      line-height: 1.35;
+    }
+
+    .row{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .pill{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+    }
+    .dot{
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: currentColor;
+      box-shadow: 0 0 10px currentColor;
+    }
+    .pill.on{ color: #40ff40; }
+    .pill.off{ color: #ff3b3b; }
+
+    .kv{
+      opacity: 0.9;
+      font-size: 0.92rem;
+    }
+
+    .players{
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pname{
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.88rem;
+      opacity: 0.92;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .updated-note{
+      margin-top: 10px;
+      opacity: 0.75;
+      font-size: 0.92rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <h1 class="logo">
+      <span class="word">The Lost</span>
+      <img src="symbol.png" alt="Lost Academy Symbol" class="logo-symbol">
+      <span class="word">Academy</span>
+    </h1>
+
+    <p class="tagline">Status — Live Server Info</p>
+    <div class="divider"></div>
+  </header>
+
+  <!-- Sticky Nav -->
+  <div class="nav-wrapper">
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="archive.html">Archive</a>
+      <a href="roster.html">Roster</a>
+      <a href="https://forums.la-clan.com/">Forum</a>
+      <a href="status.html">Status</a>
+    </nav>
+  </div>
+
+  <main class="page-content">
+
     <section class="panel">
-      <h2>Status</h2>
-      <p>Page content goes here — text, list, tables, whatever you build.</p>
+      <h2>Servers</h2>
+      <p class="panel-subtext">Live status for all Lost Academy servers.</p>
+
+      <div id="servers" class="servers-grid"></div>
+      <div id="statusNote" class="updated-note"></div>
     </section>
 
   </main>
 
+  <script>
+    const THUMB_BASE = "/map_thumbnails/";
+    const THUMB_FALLBACK = "splash.jpg";
+    const STATUS_JSON = "/status/status.json";
+
+    function cleanMapName(map) {
+      map = (map || "").trim();
+      map = map.replace(/^mp\//i, "");     // remove mp/
+      map = map.replace(/\.bsp$/i, "");    // remove .bsp if present
+      return map;
+    }
+
+    function mapThumbUrl(map) {
+      const m = cleanMapName(map);
+      return THUMB_BASE + (m ? (m + ".jpg") : THUMB_FALLBACK);
+    }
+
+    function esc(s) {
+      return (s ?? "").toString()
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;");
+    }
+
+    function renderServerCard(s) {
+      const map = s.map || "";
+      const mapClean = cleanMapName(map);
+      const thumb = mapThumbUrl(map);
+
+      const online = !!s.online;
+      const pillClass = online ? "on" : "off";
+      const pillText = online ? "ONLINE" : "OFFLINE";
+
+      const numPlayers = s.numPlayers ?? (s.players ? s.players.length : 0);
+      const maxPlayers = s.maxPlayers ?? null;
+
+      const players = (s.players || [])
+        .filter(p => (p && (p.name ?? "").toString().trim().length > 0))
+        .slice(0, 24)
+        .map(p => `<div class="pname">${esc(p.name)}</div>`)
+        .join("");
+
+      return `
+        <div class="server-card">
+          <div class="server-thumb">
+            <img src="${thumb}" alt="Map thumbnail"
+              onerror="this.onerror=null; this.src='${THUMB_BASE + THUMB_FALLBACK}';" />
+          </div>
+
+          <div class="server-meta">
+            <div class="server-title">${esc(s.name || "Server")}</div>
+
+            <div class="server-sub row">
+              <span class="pill ${pillClass}"><span class="dot"></span>${pillText}</span>
+              <span class="kv">${esc(s.host)}:${esc(s.port)}</span>
+            </div>
+
+            <div class="server-sub">
+              Map: <b>${esc(mapClean || "—")}</b>
+              &nbsp;•&nbsp;
+              Players: <b>${esc(numPlayers)}${maxPlayers ? "/" + esc(maxPlayers) : ""}</b>
+            </div>
+
+            ${online
+              ? `<div class="players">${players || `<div class="panel-subtext">No players online.</div>`}</div>`
+              : `<div class="panel-subtext">${esc(s.error || "No response")}</div>`
+            }
+          </div>
+        </div>
+      `;
+    }
+
+    async function loadStatus() {
+      const container = document.getElementById("servers");
+      const note = document.getElementById("statusNote");
+
+      try {
+        const res = await fetch(STATUS_JSON, { cache: "no-store" });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const data = await res.json();
+
+        container.innerHTML = (data.servers || []).map(renderServerCard).join("");
+
+        note.textContent = "Updated: " + new Date(data.updatedAt).toLocaleString();
+      } catch (e) {
+        container.innerHTML = `<div class="panel-subtext">Could not load status.</div>`;
+        note.textContent = "Status unavailable: " + (e.message || e);
+      }
+    }
+
+    loadStatus();
+    setInterval(loadStatus, 15000);
+  </script>
+
 </body>
 </html>
+    
+  </main>
+
+</body>
+</html>
+
