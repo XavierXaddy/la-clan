@@ -7,31 +7,21 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
-    .servers-grid{
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-      gap: 18px;
-      margin-top: 10px;
-    }
+  .servers-grid{
+    display: grid;
+    grid-template-columns: 1fr;   /* single column */
+    gap: 18px;
+    margin-top: 10px;
+  }
 
-    .server-card{
-      display: grid;
-      grid-template-columns: 170px 1fr;
-      gap: 14px;
-      padding: 14px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-    }
+     .server-card{
+      grid-template-columns: 220px 1fr; /* larger thumb column */
+      padding: 18px;
+  }
 
     .server-thumb img{
-      width: 170px;
-      height: 105px;
-      object-fit: cover;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(255,255,255,0.02);
+      width: 220px;
+      height: 135px;
     }
 
     .server-title{
@@ -174,7 +164,59 @@
         .replaceAll(">","&gt;")
         .replaceAll('"',"&quot;");
     }
+// Quake3/JKA color codes (^0-^9) -> CSS colors
+const Q3_COLORS = {
+  "0": "rgb(0,0,0)",
+  "1": "rgb(255,0,0)",
+  "2": "rgb(0,200,0)",
+  "3": "rgb(255,255,0)",
+  "4": "rgb(0,0,255)",
+  "5": "rgb(0,255,255)",
+  "6": "rgb(255,0,255)",
+  "7": "rgb(255,255,255)",
+  "8": "rgb(255,128,0)",
+  "9": "rgb(128,128,128)"
+};
 
+// Converts "Hello ^1Red ^2Green" -> spans with colors
+function q3NameToHtml(name) {
+  name = (name ?? "").toString();
+
+  function esc(s) {
+    return s
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;");
+  }
+
+  let out = "";
+  let curColor = Q3_COLORS["7"];
+  let buf = "";
+
+  for (let i = 0; i < name.length; i++) {
+    const ch = name[i];
+
+    if (ch === "^" && i + 1 < name.length) {
+      const code = name[i + 1];
+      if (code >= "0" && code <= "9") {
+        if (buf.length) {
+          out += `<span style="color:${curColor}">${esc(buf)}</span>`;
+          buf = "";
+        }
+        curColor = Q3_COLORS[code] ?? Q3_COLORS["7"];
+        i++; // skip the digit
+        continue;
+      }
+    }
+
+    buf += ch;
+  }
+
+  if (buf.length) out += `<span style="color:${curColor}">${esc(buf)}</span>`;
+  return out || `<span style="color:${Q3_COLORS["7"]}"></span>`;
+}
+    
     function renderServerCard(s) {
       const map = s.map || "";
       const mapClean = cleanMapName(map);
@@ -190,7 +232,7 @@
       const players = (s.players || [])
         .filter(p => (p && (p.name ?? "").toString().trim().length > 0))
         .slice(0, 24)
-        .map(p => `<div class="pname">${esc(p.name)}</div>`)
+        .map(p => `<div class="pname">${q3NameToHtml(p.name)}</div>`)
         .join("");
 
       return `
@@ -246,6 +288,7 @@
 
 </body>
 </html>
+
 
 
 
