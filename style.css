@@ -875,3 +875,25 @@ body {
   background: rgba(157, 167, 177, 0.10);
   border: 1px solid rgba(157, 167, 177, 0.25);
 }
+
+/* ===== Archive spacing fix (Archive only) ===== */
+.archive-list{
+  padding: 8px;              /* gives the archive list its own gutter */
+}
+
+.archive-entry{
+  max-width: 100%;
+  margin: 0;                 /* keep cards aligned */
+}
+
+/* If you want entries slightly inset even inside panel */
+@media (min-width: 700px){
+  .archive-list{
+    padding: 12px;
+  }
+}
+
+/* Extra breathing room between panel border and archive cards */
+.page-content .panel .archive-list{
+  margin-top: 10px;
+}
