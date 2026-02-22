@@ -28,14 +28,14 @@
       font-weight: 800;
       letter-spacing: 0.4px;
       margin-bottom: 6px;
-      font-size: 1.05rem;
+      font-size: 1.25rem;
     }
 
     .server-sub{
       opacity: 0.86;
       font-size: 0.95rem;
       margin-bottom: 6px;
-      line-height: 1.35;
+      line-height: 1.05;
     }
 
     .row{
@@ -71,7 +71,7 @@
 
     .kv{
       opacity: 0.9;
-      font-size: 0.92rem;
+      font-size: 1.0rem;
     }
 
     .players{
@@ -86,7 +86,7 @@
       border-radius: 999px;
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.08);
-      font-size: 0.88rem;
+      font-size: 1.0rem;
       opacity: 0.92;
       max-width: 100%;
       overflow: hidden;
@@ -99,6 +99,22 @@
       opacity: 0.75;
       font-size: 0.92rem;
     }
+
+    .server-card{
+  align-items: center;
+}
+
+.server-meta{
+  text-align: center;
+}
+
+.row{
+  justify-content: center;
+}
+
+.players{
+  justify-content: center;
+}
   </style>
 </head>
 
@@ -178,7 +194,6 @@ const Q3_COLORS = {
   "9": "rgb(128,128,128)"
 };
 
-// Converts "Hello ^1Red ^2Green" -> spans with colors
 function q3NameToHtml(name) {
   name = (name ?? "").toString();
 
@@ -194,18 +209,35 @@ function q3NameToHtml(name) {
   let curColor = Q3_COLORS["7"];
   let buf = "";
 
+  function flush() {
+    if (!buf.length) return;
+    out += `<span style="color:${curColor}">${esc(buf)}</span>`;
+    buf = "";
+  }
+
   for (let i = 0; i < name.length; i++) {
     const ch = name[i];
 
+    // ^0 - ^9
     if (ch === "^" && i + 1 < name.length) {
       const code = name[i + 1];
-      if (code >= "0" && code <= "9") {
-        if (buf.length) {
-          out += `<span style="color:${curColor}">${esc(buf)}</span>`;
-          buf = "";
+
+      // Hex color: ^xRRGGBB
+      if ((code === "x" || code === "X") && i + 7 < name.length) {
+        const hex = name.slice(i + 2, i + 8);
+        if (/^[0-9a-fA-F]{6}$/.test(hex)) {
+          flush();
+          curColor = `#${hex}`;
+          i += 7; // skip ^xRRGGBB
+          continue;
         }
+      }
+
+      // Digit palette
+      if (code >= "0" && code <= "9") {
+        flush();
         curColor = Q3_COLORS[code] ?? Q3_COLORS["7"];
-        i++; // skip the digit
+        i++; // skip digit
         continue;
       }
     }
@@ -213,7 +245,7 @@ function q3NameToHtml(name) {
     buf += ch;
   }
 
-  if (buf.length) out += `<span style="color:${curColor}">${esc(buf)}</span>`;
+  flush();
   return out || `<span style="color:${Q3_COLORS["7"]}"></span>`;
 }
     
@@ -288,6 +320,7 @@ function q3NameToHtml(name) {
 
 </body>
 </html>
+
 
 
 
