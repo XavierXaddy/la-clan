@@ -174,11 +174,18 @@
   <main class="page-content">
 
     <section class="panel">
-      <h2>Servers</h2>
+      <h2>Clan Servers</h2>
       <p class="panel-subtext">Live status for Lost Academy servers.</p>
 
       <div id="servers" class="servers-grid"></div>
       <div id="statusNote" class="updated-note"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Community</h2>
+      <p class="panel-subtext">Allied clan servers and popular community servers.</p>
+
+      <div id="communityServers" class="servers-grid"></div>
     </section>
 
   </main>
@@ -334,6 +341,7 @@ const players = playerSource
 
     async function loadStatus() {
       const container = document.getElementById("servers");
+      const communityContainer = document.getElementById("communityServers");
       const note = document.getElementById("statusNote");
 
       try {
@@ -341,10 +349,19 @@ const players = playerSource
         if (!res.ok) throw new Error("HTTP " + res.status);
         const data = await res.json();
 
-        container.innerHTML = (data.servers || []).map(renderServerCard).join("");
+        const servers = data.servers || [];
+        const clanServers = servers.filter(s => (s.group || "la") === "la");
+        const communityServers = servers.filter(s => s.group === "community");
+
+        container.innerHTML = clanServers.map(renderServerCard).join("");
+        communityContainer.innerHTML = communityServers.length
+          ? communityServers.map(renderServerCard).join("")
+          : `<div class="panel-subtext">No community servers listed.</div>`;
+
         note.textContent = "Updated: " + new Date(data.updatedAt).toLocaleString();
       } catch (e) {
         container.innerHTML = `<div class="panel-subtext">Could not load status.</div>`;
+        communityContainer.innerHTML = `<div class="panel-subtext">Could not load status.</div>`;
         note.textContent = "Status unavailable: " + (e.message || e);
       }
     }
@@ -355,16 +372,3 @@ const players = playerSource
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
